@@ -1,0 +1,29 @@
+body {
+    margin: 8px;
+}
+
+.container {
+    display: flex;
+}
+
+.box {
+    flex: 1;
+    height: calc(100vh - 20px);
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+}
+
+.dividerH {
+    display: flex;
+    height: 25px;
+    background-color: #eee;
+    margin: 0 0;
+    padding: 4px 8px;
+    font-size: medium;
+}
+
+button {
+    flex: 1;
+    width: fit-content;
+}

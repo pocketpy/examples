@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="dividerH">
+                <label for="examples">Select an example:</label>
+                <div style="width: 8px;"></div>
+                <select id="examples" name="examples">
+                </select>
+                <div style="flex: 3;"></div>
+                <button id="run">Run Code</button>
+            </div>
+            <div id="editor" style="height: 100%;"></div>
+        </div>
+
+        <div style="width: 1px; margin: 0 4px;"></div>
+
+        <div class="box">
+            <div class="dividerH">Input</div>
+            <div id="input" style="height: 50%;"></div>
+            <div class="dividerH">Output</div>
+            <div id="output" style="height: 50%;"></div>
+        </div>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>
