@@ -15,7 +15,7 @@ struct Point{
     float distance(){
         return std::sqrt(x*x + y*y);
     }
-}
+};
 
 struct wrapped__Point{
     // special macro for wrapper class
@@ -60,4 +60,12 @@ struct wrapped__Point{
             return VAR(self.value.distance());
         });
     }
+};
+
+int main(){
+    VM* vm = new VM();
+    wrapped__Point::register_class(vm);
+    vm->exec(read_stdin());
+    delete vm;
+    return 0;
 }
