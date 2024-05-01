@@ -14,9 +14,9 @@ int main(){
 
     // Bind a function named "add" to the main module
     vm->bind(vm->_main, "add(a: int, b: int)", [](VM* vm, ArgsView args){
-        int a = py_cast<int>(vm, args[0]);
-        int b = py_cast<int>(vm, args[1]);
-        return py_var(vm, a + b);
+        int a = CAST(int, args[0]);
+        int b = CAST(int, args[1]);
+        return VAR(a + b);
     });
 
     // Run code

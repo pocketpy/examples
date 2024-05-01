@@ -1,10 +1,10 @@
+def multiply(x, y):
+    return x * y
+
+
 class Multiplier:
     def __init__(self, x):
         self.x = x
 
     def multiply(self, y):
         return self.x * y
-
-
-def multiply(x, y):
-    return x * y
