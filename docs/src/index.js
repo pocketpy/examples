@@ -61,7 +61,10 @@ runButton.onclick = function () {
         method: 'POST',
         body: JSON.stringify({ "source": source, "input": input }),
         headers: {'Content-Type': 'application/json'}
-    }).then(res => res.json()).then(data => {
+    }).then(res => {
+        if(res.status == 200) return res.json();
+        alert("Failed to run code: " + res.status.toString() + " " + res.statusText);
+    }).then(data => {
         monacoOutput.setValue(data.stdout + data.stderr);
         runButton.disabled = false;
     })
