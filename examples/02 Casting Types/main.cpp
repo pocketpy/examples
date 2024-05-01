@@ -8,8 +8,8 @@ int main(){
 
     PyObject* str_obj = VAR("hello world");
     // Cast PyObject* to Str type
-    Str& str = CAST(Str&, str_obj);
-    std::cout << "string: " << str.c_str() << std::endl; // hello world
+    Str& str_var = CAST(Str&, str_obj);
+    std::cout << "string: " << str_var << std::endl; // hello world
 
     PyObject* int_obj = VAR(10);
     // Cast PyObject* to Int type
