@@ -3,8 +3,7 @@
 using namespace pkpy;
 
 Str read_stdin(){
-    SStream ss;
-    char ch;
+    SStream ss; char ch;
     while(std::cin.get(ch)) ss << ch;
     return ss.str();
 }
