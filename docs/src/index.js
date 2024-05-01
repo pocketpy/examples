@@ -47,6 +47,8 @@ select.onchange = function () {
     selectExample(select.selectedIndex);
 }
 
+selectExample(0);
+
 const endpoint = 'https://pkpy-facompiler-umuvjmhvta.cn-hongkong.fcapp.run/invoke';
 
 const runButton = document.getElementById('run');
