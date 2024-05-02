@@ -14,7 +14,7 @@ struct Point{
     int x;
     int y;
 
-    void init(int x, int y){
+    void __init__(int x, int y){
         this->x = x;
         this->y = y;
     }
@@ -31,7 +31,7 @@ struct Point{
         PY_FIELD(Point, "x", _, x)
         PY_FIELD(Point, "y", _, y)
 
-        _bind(vm, type, "__init__(self, x, y)", &Point::init);
+        _bind(vm, type, "__init__(self, x, y)", &Point::__init__);
         _bind(vm, type, "distance(self)", &Point::distance);
     }
 };
