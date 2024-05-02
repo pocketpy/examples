@@ -9,7 +9,7 @@ Str read_stdin(){
 }
 
 struct Point{
-    PY_CLASS(Point, builtins, Point)
+    PY_CLASS(Point, test, Point)
 
     int x;
     int y;
@@ -27,13 +27,7 @@ struct Point{
         return std::sqrt(x*x + y*y);
     }
 
-    bool operator==(Point other){
-        return x==other.x && y==other.y;
-    }
-
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        PY_STRUCT_LIKE(Point)
-
         PY_FIELD(Point, "x", _, x)
         PY_FIELD(Point, "y", _, y)
 
@@ -45,7 +39,8 @@ struct Point{
 
 int main(){
     VM* vm = new VM();
-    Point::register_class(vm, vm->builtins);
+    PyObject* mod = vm->new_module("test");
+    Point::register_class(vm, mod);
     vm->exec(read_stdin());
     delete vm;
     return 0;
