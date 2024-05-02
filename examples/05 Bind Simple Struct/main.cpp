@@ -17,17 +17,13 @@ struct Point{
         this->y = y;
     }
 
-    Point* _() {
-        return this;
-    }
-
     float distance(){
         return std::sqrt(x*x + y*y);
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        PY_FIELD(Point, "x", _, x)
-        PY_FIELD(Point, "y", _, y)
+        PY_FIELD(Point, "x", x)
+        PY_FIELD(Point, "y", y)
 
         _bind(vm, type, "__init__(self, x, y)", &Point::__init__);
         _bind(vm, type, "distance(self)", &Point::distance);
