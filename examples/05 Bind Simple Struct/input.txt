@@ -1,4 +1,6 @@
-p = Point(1, 2)
+import test
+
+p = test.Point(1, 2)
 
 print(p.x, p.y)
 
