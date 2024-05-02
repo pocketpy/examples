@@ -36,7 +36,7 @@ int main(){
     // Create a new module named "test"
     PyObject* mod = vm->new_module("test");
     // Register the Point class to the module
-    vm->register_user_class<Point>(mod, "Point");
+    vm->register_user_class<Point>(mod, "Point", true);
     // Run code
     vm->exec(read_stdin());
     delete vm;
