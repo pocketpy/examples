@@ -66,6 +66,7 @@ runButton.onclick = function () {
         alert("Failed to run code: " + res.status.toString() + " " + res.statusText);
     }).then(data => {
         monacoOutput.setValue(data.stdout + data.stderr);
+        document.getElementById("outputH").textContent = "Output (" + data.elapsed_time.toFixed(2) + " s)";
         runButton.disabled = false;
     })
 }
