@@ -18,11 +18,11 @@ int main(){
     int x = 10;
     int y = 3;
 
-    PyObject* f_multiply = vm->_main->attr("multiply");
+    PyObject* f_multiply = vm->getattr(vm->_main, "multiply");
     PyObject* result1 = vm->call(f_multiply, VAR(x), VAR(y));
     std::cout << "multiply(10, 3): " << CAST(int, result1) << std::endl;
 
-    PyObject* Multiplier = vm->_main->attr("Multiplier");
+    PyObject* Multiplier = vm->getattr(vm->_main, "Multiplier");
     PyObject* multiplier = vm->call(Multiplier, VAR(x));
     PyObject* result2 = vm->call_method(multiplier, "multiply", VAR(y));
     std::cout << "Multiplier(10).multiply(3): " << CAST(int, result2) << std::endl;
