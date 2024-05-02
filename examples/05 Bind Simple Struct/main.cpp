@@ -9,8 +9,6 @@ Str read_stdin(){
 }
 
 struct Point{
-    PY_CLASS(Point, test, Point)
-
     int x;
     int y;
 
@@ -39,8 +37,11 @@ struct Point{
 
 int main(){
     VM* vm = new VM();
+    // Create a new module named "test"
     PyObject* mod = vm->new_module("test");
-    Point::register_class(vm, mod);
+    // Register the Point class to the module
+    vm->register_user_class<Point>(mod, "Point");
+    // Run code
     vm->exec(read_stdin());
     delete vm;
     return 0;
