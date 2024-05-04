@@ -20,14 +20,6 @@ struct Point{
     float distance(){
         return std::sqrt(x*x + y*y);
     }
-
-    static void _register(VM* vm, PyObject* mod, PyObject* type){
-        vm->bind_field(type, "x", &Point::x);
-        vm->bind_field(type, "y", &Point::y);
-
-        _bind(vm, type, "__init__(self, x, y)", &Point::__init__);
-        _bind(vm, type, "distance(self)", &Point::distance);
-    }
 };
 
 
@@ -36,7 +28,13 @@ int main(){
     // Create a new module named "test"
     PyObject* mod = vm->new_module("test");
     // Register the Point class to the module
-    vm->register_user_class<Point>(mod, "Point", true);
+    vm->register_user_class<Point>(mod, "Point", [](VM* vm, PyObject* mod, PyObject* type){
+        vm->bind_field(type, "x", &Point::x);
+        vm->bind_field(type, "y", &Point::y);
+
+        vm->bind(type, "__init__(self, x, y)", &Point::__init__);
+        vm->bind(type, "distance(self)", &Point::distance);
+    }, VM::tp_object, true);
     // Run code
     vm->exec(read_stdin());
     delete vm;
