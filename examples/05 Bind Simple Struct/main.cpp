@@ -22,8 +22,8 @@ struct Point{
     }
 
     static void _register(VM* vm, PyObject* mod, PyObject* type){
-        PY_FIELD(Point, "x", x)
-        PY_FIELD(Point, "y", y)
+        vm->bind_field(type, "x", &Point::x);
+        vm->bind_field(type, "y", &Point::y);
 
         _bind(vm, type, "__init__(self, x, y)", &Point::__init__);
         _bind(vm, type, "distance(self)", &Point::distance);
