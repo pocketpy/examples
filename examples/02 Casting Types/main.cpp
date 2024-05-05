@@ -27,8 +27,7 @@ int main(){
     tuple_var[1] = int_obj;
     tuple_var[2] = float_obj;
     PyObject* tuple_obj = VAR(std::move(tuple_var));
-    PyObject* tuple_repr = vm->py_repr(tuple_obj);
-    std::cout << "tuple: " << CAST(Str&, tuple_repr) << std::endl;
+    std::cout << "tuple: " <<  vm->py_repr(tuple_obj) << std::endl;
 
     // Create a list
     List list_var;
@@ -36,8 +35,7 @@ int main(){
     list_var.push_back(int_obj);
     list_var.push_back(float_obj);
     PyObject* list_obj = VAR(std::move(list_var));
-    PyObject* list_repr = vm->py_repr(list_obj);
-    std::cout << "list: " << CAST(Str&, list_repr) << std::endl;
+    std::cout << "list: " << vm->py_repr(list_obj) << std::endl;
 
     // Create a dict
     Dict dict_var(vm);
@@ -45,8 +43,7 @@ int main(){
     dict_var.set(VAR("int"), int_obj);
     dict_var.set(VAR("float"), float_obj);
     PyObject* dict_obj = VAR(std::move(dict_var));
-    PyObject* dict_repr = vm->py_repr(dict_obj);
-    std::cout << "dict: " << CAST(Str&, dict_repr) << std::endl;
+    std::cout << "dict: " << vm->py_repr(dict_obj) << std::endl;
 
     // Dispose the virtual machine
     delete vm;
