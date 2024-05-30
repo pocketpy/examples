@@ -63,7 +63,7 @@ struct Line {
 
 namespace py = pybind11;
 
-int test_class() {
+int main() {
     py::initialize();
     try {
         py::module m = py::module::import("__main__");
@@ -73,7 +73,7 @@ int test_class() {
             .def_readwrite("x", &Point::x)
             .def_readwrite("y", &Point::y)
             .def_property("z", &Point::get_z, &Point::set_z)
-            .def("stringfy", &Point::stringfy);
+            .def("__repr__", &Point::stringfy);
 
         py::class_<Line>(m, "Line")
             .def(py::init<>())

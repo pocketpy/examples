@@ -38,10 +38,10 @@ int main(){
     std::cout << "list: " << vm->py_repr(list_obj) << std::endl;
 
     // Create a dict
-    Dict dict_var(vm);
-    dict_var.set(VAR("str"), str_obj);
-    dict_var.set(VAR("int"), int_obj);
-    dict_var.set(VAR("float"), float_obj);
+    Dict dict_var;
+    dict_var.set(vm, VAR("str"), str_obj);
+    dict_var.set(vm, VAR("int"), int_obj);
+    dict_var.set(vm, VAR("float"), float_obj);
     PyVar dict_obj = VAR(std::move(dict_var));
     std::cout << "dict: " << vm->py_repr(dict_obj) << std::endl;
 
