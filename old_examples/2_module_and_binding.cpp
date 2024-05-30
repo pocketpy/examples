@@ -14,7 +14,7 @@ int main(){
     VM* vm = new VM();
 
     // Create a module
-    PyObject* math_module = vm->new_module("math");
+    PyVar math_module = vm->new_module("math");
 
     // Bind a function named "add" to the module
     vm->bind(math_module, "add(a: int, b: int) -> int",
@@ -26,8 +26,8 @@ int main(){
         
   
     // Call the "add" function
-    PyObject* f_sum = math_module->attr("add");
-    PyObject* result = vm->call(f_sum, py_var(vm, 4), py_var(vm, 5));
+    PyVar f_sum = math_module->attr("add");
+    PyVar result = vm->call(f_sum, py_var(vm, 4), py_var(vm, 5));
     std::cout << "Sum: " << py_cast<int>(vm, result) << std::endl;   // 9
 
     // Dispose the virtual machine

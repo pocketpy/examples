@@ -16,7 +16,7 @@ int main(){
     VM* vm = new VM();
 
     // Create "employee" module
-    PyObject* employee_module = vm->new_module("employee");
+    PyVar employee_module = vm->new_module("employee");
 
     // Bind a function named "get_first_name" to the module
     vm->bind(employee_module, "get_first_name(employee: Dict) -> str",
@@ -80,26 +80,26 @@ int main(){
     hobbies.push_back(VAR("Walking"));
     hobbies.push_back(VAR("Coding"));
     employee.set(VAR("hobbies"), VAR(std::move(hobbies)));
-    PyObject* employee_obj = VAR(std::move(employee));
+    PyVar employee_obj = VAR(std::move(employee));
 
     // Call the "get_first_name" function
-    PyObject* f_get_first_name = employee_module->attr("get_first_name");
-    PyObject* first_name = vm->call(f_get_first_name, employee_obj);
+    PyVar f_get_first_name = employee_module->attr("get_first_name");
+    PyVar first_name = vm->call(f_get_first_name, employee_obj);
     std::cout << "First name: " << CAST(Str&, first_name) << std::endl;   // First name: John
 
     // Call the "get_last_name" function
-    PyObject* f_get_last_name = employee_module->attr("get_last_name");
-    PyObject* last_name = vm->call(f_get_last_name, employee_obj);
+    PyVar f_get_last_name = employee_module->attr("get_last_name");
+    PyVar last_name = vm->call(f_get_last_name, employee_obj);
     std::cout << "Last name: " << CAST(Str&, last_name) << std::endl;   // Last name: Doe
  
     // Call the "get_salary" function
-    PyObject* f_get_salary = employee_module->attr("get_salary");
-    PyObject* salary = vm->call(f_get_salary, employee_obj);
+    PyVar f_get_salary = employee_module->attr("get_salary");
+    PyVar salary = vm->call(f_get_salary, employee_obj);
     std::cout << "Salary: "<< CAST(double, salary) << std::endl;   // Salary: 10000
 
     // Call the "love_coding" function
-    PyObject* f_love_coding = employee_module->attr("love_coding");
-    PyObject* love_coding = vm->call(f_love_coding, employee_obj);
+    PyVar f_love_coding = employee_module->attr("love_coding");
+    PyVar love_coding = vm->call(f_love_coding, employee_obj);
     std::cout << "Loves coding: " << CAST(Str&, love_coding) << std::endl;   // Loves coding: Yes
 
     // Dispose the virtual machine

@@ -1,0 +1,18 @@
+p = Point()
+assert p.stringfy() == '(0, 0, 0)'
+p = Point(1, 2, 3)
+assert p.x == 1
+assert p.y == 2
+assert p.z == 3
+assert p.stringfy() == '(1, 2, 3)'
+p.x = 10
+p.y = 20
+p.z = 30
+assert p.stringfy() == '(10, 20, 30)'
+
+l = Line()
+l.start = Point(1, 2, 3)
+l.end = Point(4, 5, 6)
+p = l.start
+assert l.start.stringfy() == '(1, 2, 3)'
+assert l.end.stringfy() == '(4, 5, 6)'

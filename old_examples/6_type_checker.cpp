@@ -14,13 +14,13 @@ int main(){
     VM* vm = new VM();
 
     // Create a module
-    PyObject* type_checker = vm->new_module("type_checker");
+    PyVar type_checker = vm->new_module("type_checker");
 
     // Bind a function named "get_type" to the module
     vm->bind(type_checker, "get_type(obj: object) -> str",
         "Returns type of a python object",  // docstring
         [](VM* vm, ArgsView args){
-            PyObject* obj = args[0];
+            PyVar obj = args[0];
             if(is_type(obj, vm->tp_int)){
                 return py_var(vm, "int");
             }
@@ -48,7 +48,7 @@ int main(){
         });
     
     // Get the "get_type" function
-    PyObject* f_get_type = type_checker->attr("get_type");
+    PyVar f_get_type = type_checker->attr("get_type");
 
     // Create a dictionary
     Dict d(vm);
@@ -64,13 +64,13 @@ int main(){
     t[1] = py_var(vm, "tuple_element_1");
 
     // Create different types of objects
-    PyObject* int_obj = py_var(vm, 1);
-    PyObject* str_obj = py_var(vm, "hello");
-    PyObject* float_obj = py_var(vm, 1.0);
-    PyObject* bool_obj = py_var(vm, true);
-    PyObject* dict_obj = py_var(vm, std::move(d));
-    PyObject* list_obj = py_var(vm, std::move(l));
-    PyObject* tuple_obj = py_var(vm, std::move(t));
+    PyVar int_obj = py_var(vm, 1);
+    PyVar str_obj = py_var(vm, "hello");
+    PyVar float_obj = py_var(vm, 1.0);
+    PyVar bool_obj = py_var(vm, true);
+    PyVar dict_obj = py_var(vm, std::move(d));
+    PyVar list_obj = py_var(vm, std::move(l));
+    PyVar tuple_obj = py_var(vm, std::move(t));
 
     // Call the "get_type" function and print type of different objects
     std::cout << "Type of 1: " << CAST(Str&, vm->call(f_get_type, int_obj)) << std::endl;
