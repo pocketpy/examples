@@ -81,7 +81,9 @@ int main() {
             .def_readwrite("end", &Line::end);
 
         py::vm->exec(read_stdin());
-    } catch(const pkpy::Exception& e) { std::cerr << e.msg << '\n'; }
+    } catch(pkpy::TopLevelException e) {
+        std::cerr << e.summary() << '\n';
+    }
 
     py::finalize();
     assert(Point::constructor_calls == Point::destructor_calls);
