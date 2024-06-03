@@ -27,7 +27,7 @@ struct Point{
 int main(){
     VM* vm = new VM();
     // Create a new module named "test"
-    PyVar mod = vm->new_module("test");
+    PyObject* mod = vm->new_module("test");
     // Register the Point class to the module
     vm->register_user_class<Point>(mod, "Point",
     [](VM* vm, PyObject* mod, PyObject* type){
