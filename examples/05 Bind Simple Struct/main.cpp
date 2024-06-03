@@ -30,7 +30,7 @@ int main(){
     PyVar mod = vm->new_module("test");
     // Register the Point class to the module
     vm->register_user_class<Point>(mod, "Point",
-    [](VM* vm, PyVar mod, PyVar type){
+    [](VM* vm, PyObject* mod, PyObject* type){
         vm->bind_field(type, "x", &Point::x);
         vm->bind_field(type, "y", &Point::y);
 
