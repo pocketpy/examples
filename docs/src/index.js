@@ -9,7 +9,7 @@ self.MonacoEnvironment = {
 };
 
 const monacoEditor = monaco.editor.create(document.getElementById('editor'), {
-	value: "#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hello, World!\" << endl;\n    return 0;\n}",
+	value: "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\n",
 	language: 'cpp',
     minimap: { enabled: false }
 });
