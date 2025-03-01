@@ -10,7 +10,7 @@ self.MonacoEnvironment = {
 
 const monacoEditor = monaco.editor.create(document.getElementById('editor'), {
 	value: "#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\\n\");\n    return 0;\n}\n",
-	language: 'cpp',
+	language: 'c',
     minimap: { enabled: false }
 });
 
@@ -49,7 +49,7 @@ select.onchange = function () {
 
 selectExample(0);
 
-const endpoint = 'https://pkpy-facompiler-umuvjmhvta.cn-hongkong.fcapp.run/invoke';
+const endpoint = 'https://v-pkpy-compiler-zfrudnaolp.cn-hongkong.fcapp.run';
 
 const runButton = document.getElementById('run');
 runButton.onclick = function () {
@@ -66,7 +66,7 @@ runButton.onclick = function () {
         alert("Failed to run code: " + res.status.toString() + " " + res.statusText);
     }).then(data => {
         monacoOutput.setValue(data.stdout + data.stderr);
-        document.getElementById("outputH").textContent = "Output (" + data.elapsed_time.toFixed(2) + " s)";
+        document.getElementById("outputH").textContent = "Return Code: " + data.return_code + " (" + data.elapsed_time.toFixed(2) + " s)";
         runButton.disabled = false;
     })
 }

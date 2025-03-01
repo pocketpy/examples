@@ -1,34 +1,64 @@
 #include "pocketpy.h"
-#include <iostream>
+#include <stdio.h>
 
-using namespace pkpy;
+int main() {
+  py_initialize();
 
-Str read_stdin(){
-    SStream ss; char ch;
-    while(std::cin.get(ch)) ss << ch;
-    return ss.str();
-}
+  int x = 10;
+  int y = 3;
 
-int main(){
-    // Create a virtual machine
-    VM* vm = new VM();
+  py_GlobalRef __main__ = py_getmodule("__main__");
+  if (!py_getattr(__main__, py_name("multiply"))) {
+    py_printexc();
+    goto finalize;
+  }
 
-    // Run code first
-    vm->exec(read_stdin());
+  py_push(py_retval());
+  py_pushnil();
+  py_newint(py_pushtmp(), x);
+  py_newint(py_pushtmp(), y);
 
-    int x = 10;
-    int y = 3;
+  if (!py_vectorcall(2, 0)) {
+    py_printexc();
+    goto finalize;
+  }
 
-    PyVar f_multiply = vm->getattr(vm->_main, "multiply");
-    PyVar result1 = vm->call(f_multiply, VAR(x), VAR(y));
-    std::cout << "multiply(10, 3): " << CAST(int, result1) << std::endl;
+  if (py_isint(py_retval())) {
+    int res = py_toint(py_retval());
+    printf("multiply(10, 3): %d\n", res);
+  }
 
-    PyVar Multiplier = vm->getattr(vm->_main, "Multiplier");
-    PyVar multiplier = vm->call(Multiplier, VAR(x));
-    PyVar result2 = vm->call_method(multiplier, "multiply", VAR(y));
-    std::cout << "Multiplier(10).multiply(3): " << CAST(int, result2) << std::endl;
+  if (!py_getattr(__main__, py_name("Multiplier"))) {
+    py_printexc();
+    goto finalize;
+  }
+  py_push(py_retval());
+  py_pushnil();
+  py_newint(py_pushtmp(), x);
 
-    // Dispose the virtual machine
-    delete vm;
-    return 0;
+  if (!py_vectorcall(1, 0)) {
+    py_printexc();
+    goto finalize;
+  }
+
+  py_push(py_retval());
+  if (!py_pushmethod(py_name("multiply"))) {
+    py_printexc();
+    goto finalize;
+  }
+  py_newint(py_pushtmp(), y);
+
+  if (!py_vectorcall(1, 0)) {
+    py_printexc();
+    goto finalize;
+  }
+
+  if (py_isint(py_retval())) {
+    int res = py_toint(py_retval());
+    printf("Multiplier(10).multiply(3): %d\n", res);
+  }
+
+finalize:
+  py_finalize();
+  return 0;
 }
