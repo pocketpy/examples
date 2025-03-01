@@ -15,6 +15,8 @@ int main() {
   int y = 3;
 
   py_GlobalRef __main__ = py_getmodule("__main__");
+
+  // multiply(x, y)
   if (!py_getattr(__main__, py_name("multiply"))) {
     py_printexc();
     goto finalize;
@@ -35,15 +37,9 @@ int main() {
     printf("multiply(10, 3): %d\n", res);
   }
 
-  if (!py_getattr(__main__, py_name("Multiplier"))) {
-    py_printexc();
-    goto finalize;
-  }
-  py_push(py_retval());
-  py_pushnil();
-  py_newint(py_pushtmp(), x);
-
-  if (!py_vectorcall(1, 0)) {
+  // Multiplier(x).multiply(y)
+  py_newint(py_r0(), x);
+  if (!py_smarteval("Multiplier(_)", __main__, py_r0())) {
     py_printexc();
     goto finalize;
   }

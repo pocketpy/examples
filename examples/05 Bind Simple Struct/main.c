@@ -1,5 +1,6 @@
 #include "pocketpy.h"
 #include <math.h>
+#include <stdio.h>
 
 #define INPUT ""
 
@@ -61,10 +62,20 @@ static bool Vector2_set_y(int argc, py_Ref argv) {
   return true;
 }
 
+static bool Vector2__repr__(int argc, py_Ref argv) {
+  PY_CHECK_ARGC(1);
+  Vector2 *self = py_touserdata(py_arg(0));
+  char buf[64];
+  snprintf(buf, sizeof(buf), "Vector2(%.1f, %.1f)", self->x, self->y);
+  py_newstr(py_retval(), buf);
+  return true;
+}
+
 static bool Vector2_length(int argc, py_Ref argv) {
   PY_CHECK_ARGC(1);
   Vector2 *self = py_touserdata(py_arg(0));
-  py_newfloat(py_retval(), sqrtf(self->x * self->x + self->y * self->y));
+  float res = sqrtf(self->x * self->x + self->y * self->y);
+  py_newfloat(py_retval(), res);
   return true;
 }
 
@@ -76,6 +87,7 @@ int main() {
 
   py_bindmethod(type, "__new__", Vector2__new__);
   py_bindmethod(type, "__init__", Vector2__init__);
+  py_bindmethod(type, "__repr__", Vector2__repr__);
   py_bindproperty(type, "x", Vector2_get_x, Vector2_set_x);
   py_bindproperty(type, "y", Vector2_get_y, Vector2_set_y);
   py_bindmethod(type, "length", Vector2_length);
