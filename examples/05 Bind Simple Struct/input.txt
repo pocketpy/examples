@@ -1,12 +1,12 @@
 import test
 
-p = test.Point(1, 2)
+p = test.Vector2(1.0, 2.0)
 
 print(p.x, p.y)
 
-p.x = 3
-p.y = 4
+p.x = 3.0
+p.y = 4.0
 
 print(p.x, p.y)
 
-print(p.distance())
+print(p.length())
