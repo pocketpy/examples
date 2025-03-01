@@ -11,12 +11,12 @@ int main() {
 
   // int
   py_newint(py_r1(), 10);
-  int int_ = py_toint(py_r0());
+  int int_ = py_toint(py_r1());
   printf("int: %d\n", int_);
 
   // float
   py_newfloat(py_r2(), 10.5);
-  float float_ = py_tofloat(py_r0());
+  float float_ = py_tofloat(py_r2());
   printf("float: %f\n", float_);
 
   // tuple (r3)
