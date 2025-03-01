@@ -1,0 +1,4 @@
+my_print(1, '2', 3.0, True, [None, ('a', 'b')])
+
+a = [i for i in range(5)]
+my_print(*a, sep=' | ')
