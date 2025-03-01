@@ -1,8 +1,15 @@
 #include "pocketpy.h"
 #include <stdio.h>
 
+#define INPUT ""
+
 int main() {
   py_initialize();
+
+  if (!py_exec(INPUT, "main.py", EXEC_MODE, NULL)) {
+    py_printexc();
+    goto finalize;
+  }
 
   int x = 10;
   int y = 3;
