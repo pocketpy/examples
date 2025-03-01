@@ -22,10 +22,10 @@ int main() {
     goto finalize;
   }
 
-  py_push(py_retval());
-  py_pushnil();
-  py_newint(py_pushtmp(), x);
-  py_newint(py_pushtmp(), y);
+  py_push(py_retval());       // callable
+  py_pushnil();               // self or nil
+  py_newint(py_pushtmp(), x); // arg1
+  py_newint(py_pushtmp(), y); // arg2
 
   if (!py_vectorcall(2, 0)) {
     py_printexc();
@@ -39,19 +39,8 @@ int main() {
 
   // Multiplier(x).multiply(y)
   py_newint(py_r0(), x);
-  if (!py_smarteval("Multiplier(_)", __main__, py_r0())) {
-    py_printexc();
-    goto finalize;
-  }
-
-  py_push(py_retval());
-  if (!py_pushmethod(py_name("multiply"))) {
-    py_printexc();
-    goto finalize;
-  }
-  py_newint(py_pushtmp(), y);
-
-  if (!py_vectorcall(1, 0)) {
+  py_newint(py_r1(), y);
+  if (!py_smarteval("Multiplier(_0).multiply(_1)", NULL, py_r0(), py_r1())) {
     py_printexc();
     goto finalize;
   }

@@ -11,6 +11,7 @@ static bool add_int(int argc, py_Ref argv) {
   return true;
 }
 
+// this magic macro is used to get the input string
 #define INPUT ""
 
 int main() {
