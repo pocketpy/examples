@@ -1,47 +1,60 @@
 #include "pocketpy.h"
+#include <stdio.h>
 
-int main(){
-    py_initialize();
+int main() {
+  py_initialize();
 
-    PyVar str_obj = VAR("hello world");
-    // Cast PyVar to Str type
-    Str& str_var = CAST(Str&, str_obj);
-    std::cout << "str: " << str_var << std::endl;
+  // string
+  py_newstr(py_r0(), "hello world");
+  const char *str_ = py_tostr(py_r0());
+  printf("str: %s\n", str_);
 
-    PyVar int_obj = VAR(10);
-    // Cast PyVar to Int type
-    int int_var = CAST(int, int_obj);
-    std::cout << "int: " << int_var << std::endl;
+  // int
+  py_newint(py_r1(), 10);
+  int int_ = py_toint(py_r0());
+  printf("int: %d\n", int_);
 
-    PyVar float_obj = VAR(10.5);
-    // Cast PyVar to float type
-    float float_var = CAST(float, float_obj);
-    std::cout << "float: " << float_var << std::endl;
+  // float
+  py_newfloat(py_r2(), 10.5);
+  float float_ = py_tofloat(py_r0());
+  printf("float: %f\n", float_);
 
-    // Create a tuple
-    Tuple tuple_var(3);
-    tuple_var[0] = str_obj;
-    tuple_var[1] = int_obj;
-    tuple_var[2] = float_obj;
-    PyVar tuple_obj = VAR(std::move(tuple_var));
-    std::cout << "tuple: " <<  vm->py_repr(tuple_obj) << std::endl;
+  // tuple (r3)
+  py_Ref p = py_newtuple(py_r3(), 3);
+  py_assign(py_offset(p, 0), py_r0());
+  py_assign(py_offset(p, 1), py_r1());
+  py_assign(py_offset(p, 2), py_r2());
+  if (!py_repr(py_r3())) {
+    py_printexc();
+    goto finalize;
+  }
+  printf("tuple: %s\n", py_tostr(py_retval()));
 
-    // Create a list
-    List list_var;
-    list_var.push_back(str_obj);
-    list_var.push_back(int_obj);
-    list_var.push_back(float_obj);
-    PyVar list_obj = VAR(std::move(list_var));
-    std::cout << "list: " << vm->py_repr(list_obj) << std::endl;
+  // list (r4)
+  py_newlist(py_r4());
+  py_list_append(py_r4(), py_r0());
+  py_list_append(py_r4(), py_r1());
+  py_list_append(py_r4(), py_r2());
+  if (!py_repr(py_r4())) {
+    py_printexc();
+    goto finalize;
+  }
+  printf("list: %s\n", py_tostr(py_retval()));
 
-    // Create a dict
-    Dict dict_var;
-    dict_var.set(vm, VAR("str"), str_obj);
-    dict_var.set(vm, VAR("int"), int_obj);
-    dict_var.set(vm, VAR("float"), float_obj);
-    PyVar dict_obj = VAR(std::move(dict_var));
-    std::cout << "dict: " << vm->py_repr(dict_obj) << std::endl;
+  // dict (r5)
+  py_newdict(py_r5());
+  py_dict_setitem_by_str(py_r5(), "str", py_r0());
+  py_dict_setitem_by_str(py_r5(), "int", py_r1());
+  py_dict_setitem_by_str(py_r5(), "float", py_r2());
+  py_dict_setitem_by_str(py_r5(), "tuple", py_r3());
+  py_dict_setitem_by_str(py_r5(), "list", py_r4());
+  if (!py_repr(py_r5())) {
+    py_printexc();
+    goto finalize;
+  }
+  printf("dict: %s\n", py_tostr(py_retval()));
 
-    py_finalize();
-    return 0;
+finalize:
+  py_finalize();
+  return 0;
 }
