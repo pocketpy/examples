@@ -28,9 +28,9 @@ static bool my_print(int argc, py_Ref argv) {
 static bool my_print_kw_dict_apply(py_Ref key, py_Ref value, void *ctx) {
   const char *sep = (const char *)ctx;
   if (!py_str(key)) return false;
-  printf("%s=", py_tostr(key));
+  printf("%s=", py_tostr(py_retval()));
   if (!py_str(value)) return false;
-  printf("%s%s\n", sep, py_tostr(value));
+  printf("%s%s\n", sep, py_tostr(py_retval()));
   return true;
 }
 
