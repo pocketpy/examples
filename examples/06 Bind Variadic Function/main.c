@@ -25,11 +25,32 @@ static bool my_print(int argc, py_Ref argv) {
   return true;
 }
 
+static bool my_print_kw_dict_apply(py_Ref key, py_Ref value, void *ctx) {
+  const char *sep = (const char *)ctx;
+  if (!py_str(key)) return false;
+  printf("%s=", py_tostr(key));
+  if (!py_str(value)) return false;
+  printf("%s%s\n", sep, py_tostr(value));
+  return true;
+}
+
+static bool my_print_kw(int argc, py_Ref argv) {
+  PY_CHECK_ARGC(2);
+  PY_CHECK_ARG_TYPE(0, tp_str);
+  PY_CHECK_ARG_TYPE(1, tp_dict);
+  const char *sep = py_tostr(py_arg(0));
+  bool ok = py_dict_apply(py_arg(1), my_print_kw_dict_apply, (void *)sep);
+  if (!ok) return false;
+  py_newnone(py_retval());
+  return true;
+}
+
 int main() {
   py_initialize();
 
   py_GlobalRef __main__ = py_getmodule("__main__");
   py_bind(__main__, "my_print(*args, sep=', ')", my_print);
+  py_bind(__main__, "my_print_kw(sep='=', **kwargs)", my_print_kw);
 
   if (!py_exec(INPUT, "main.py", EXEC_MODE, NULL)) {
     py_printexc();

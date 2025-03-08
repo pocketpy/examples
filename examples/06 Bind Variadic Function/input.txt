@@ -1,4 +1,10 @@
+# my_print(*args, sep=', ')
 my_print(1, '2', 3.0, True, [None, ('a', 'b')])
 
 a = [i for i in range(5)]
 my_print(*a, sep=' | ')
+
+
+# my_print_kw(sep='=', **kwargs)
+my_print_kw(a=1, b='2', c=3.0, d=True)
+my_print_kw(a=1, b='2', c=3.0, d=True, sep=': ')
