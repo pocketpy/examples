@@ -4,7 +4,7 @@ my_print(1, '2', 3.0, True, [None, ('a', 'b')])
 a = [i for i in range(5)]
 my_print(*a, sep=' | ')
 
-print("==> my_print_kw(**kwargs)")
+print("==> my_print_kw(sep='=', **kwargs)")
 my_print_kw(a=1, b='2', c=3.0, d=True)
 print()
 my_print_kw(a=1, b='2', c=3.0, d=True, sep=': ')
