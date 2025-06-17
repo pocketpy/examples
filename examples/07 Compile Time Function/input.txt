@@ -1,0 +1,8 @@
+from dis import dis
+
+a = '''
+class MyClass:
+    x: int = testadd(2, 5)
+'''
+
+dis(compile(a, '<string>', 'exec'))
