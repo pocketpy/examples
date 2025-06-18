@@ -11,7 +11,7 @@ static bool testadd(int argc, py_Ref argv) {
 int main() {
   py_initialize();
 
-  py_compiletime_bind("testadd(__a, __b)", testadd);
+  py_macrobind("testadd(__a, __b)", testadd);
 
   if (!py_exec(INPUT, "main.py", EXEC_MODE, NULL)) {
     py_printexc();
